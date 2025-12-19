@@ -30,7 +30,7 @@ PLAY_AGAIN_FONT = SCORE_NUMB_FONT
 SCORE_MSG = SCORE_FONT.render("Score : ", 1, pygame.Color("yellow"))
 SCORE_MSG_SIZE = SCORE_FONT.size("Score")
 BACKGROUND_COLOR = pygame.Color(0, 0, 0)
-BLACK = pygame.Color(0, 0, 0)
+
 
 
 
