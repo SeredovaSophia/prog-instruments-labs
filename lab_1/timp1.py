@@ -36,8 +36,8 @@ BACKGROUND_COLOR = pygame.Color(0, 0, 0)
 
 GAMECLOCK = pygame.time.Clock()
 
-def check_collision(pos_a,a_s ,pos_b , b_s):
-    if(pos_a.x < pos_b.x+b_s and pos_a.x+a_s > pos_b.x and pos_a.y < pos_b.y+b_s and pos_a.y+a_s > pos_b.y):
+def check_collision(pos_a, a_s, pos_b, b_s):
+    if (pos_a.x < pos_b.x + b_s and pos_a.x + a_s > pos_b.x and pos_a.y < pos_b.y + b_s and pos_a.y + a_s > pos_b.y):
         return True
     return False
 
