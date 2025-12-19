@@ -3,12 +3,11 @@ import random
 import sys
 import pygame
 
+
 pygame.init()
 pygame.display.set_caption("Simple Snake Game")
 pygame.font.init()
 random.seed()
-
-
 
 SPEED = 0.36
 SNAKE_SIZE = 9
@@ -18,8 +17,6 @@ SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 800
 FPS = 25
 KEY = {"UP": 1, "DOWN": 2, "LEFT": 3, "RIGHT": 4}
-
-
 
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.HWSURFACE)
 
@@ -31,10 +28,8 @@ SCORE_MSG = SCORE_FONT.render("Score : ", 1, pygame.Color("yellow"))
 SCORE_MSG_SIZE = SCORE_FONT.size("Score")
 BACKGROUND_COLOR = pygame.Color(0, 0, 0)
 
-
-
-
 GAMECLOCK = pygame.time.Clock()
+
 
 def check_collision(pos_a, a_s, pos_b, b_s):
     if (pos_a.x < pos_b.x + b_s and pos_a.x + a_s > pos_b.x and pos_a.y < pos_b.y + b_s and pos_a.y + a_s > pos_b.y):
@@ -53,7 +48,6 @@ def check_limits(snake):
         snake.y = SCREEN_HEIGHT - SNAKE_SIZE
 
 
-
 class Apple:
     def __init__(self, x, y, state):
         self.x = x
@@ -64,13 +58,14 @@ class Apple:
     def draw(self, SCREEN):
         pygame.draw.rect(SCREEN, self.color, (self.x, self.y, APPLE_SIZE, APPLE_SIZE), 0)
 
-class Segment:
 
+class Segment:
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.direction = KEY["UP"]
         self.color = "white"
+
 
 class Snake:
     def __init__(self, x, y):
@@ -83,8 +78,6 @@ class Snake:
         black_box.direction = KEY["UP"]
         black_box.color = "NULL"
         self.stack.append(black_box)
-
-
 
     def move(self):
         last_element = len(self.stack) - 1
@@ -163,8 +156,6 @@ class Snake:
     def set_y(self, y):
         self.y = y
 
-
-
     def check_crashing(self):
         counter = 1
         while (counter < len(self.stack) - 1):
@@ -173,7 +164,6 @@ class Snake:
                 return True
             counter += 1
         return False
-
 
     def draw(self, screen):
         pygame.draw.rect(screen, pygame.color.Color("green"), (self.stack[0].x, self.stack[0].y,
@@ -186,7 +176,6 @@ class Snake:
             pygame.draw.rect(screen, pygame.color.Color("yellow"), (self.stack[counter].x,
                                                                     self.stack[counter].y, SNAKE_SIZE, SNAKE_SIZE), 0)
             counter += 1
-
 
 
 def get_key():
@@ -212,6 +201,7 @@ def get_key():
         if event.type == pygame.QUIT:
             sys.exit(0)
 
+
 def end_game():
     message = GAME_OVER_FONT.render("Game Over", 1, pygame.Color("white"))
     message_play_again = PLAY_AGAIN_FONT.render("Play Again ? (Y/N)", 1, pygame.Color("green"))
@@ -231,10 +221,12 @@ def end_game():
         GAMECLOCK.tick(FPS)
     sys.exit(0)
 
+
 def draw_score(score):
     score_numb = SCORE_NUMB_FONT.render(str(score), 1, pygame.Color("red"))
     SCREEN.blit(SCORE_MSG, (SCREEN_WIDTH - SCORE_MSG_SIZE[0] - 60, 10))
     SCREEN.blit(score_numb, (SCREEN_WIDTH - 45, 14))
+
 
 def draw_game_time(time_game):
     game_time = SCORE_FONT.render("Time:", 1, pygame.Color("white"))
@@ -242,8 +234,10 @@ def draw_game_time(time_game):
     SCREEN.blit(game_time, (30, 10))
     SCREEN.blit(game_time_numb, (105, 14))
 
+
 def exit_screen():
     pass
+
 
 def respawn_apple(apples, index, sx, sy):
     radius = math.sqrt((SCREEN_WIDTH / 2 * SCREEN_WIDTH / 2 + SCREEN_HEIGHT / 2 * SCREEN_HEIGHT / 2)) / 2
@@ -256,6 +250,7 @@ def respawn_apple(apples, index, sx, sy):
             continue
     new_apple = Apple(x, y, 1)
     apples[index] = new_apple
+
 
 def respawn_apples(apples, quantity, sx, sy):
     counter = 0
@@ -278,9 +273,6 @@ def respawn_apples(apples, quantity, sx, sy):
 def main():
     score = 0
 
-
-
-
     my_snake = Snake(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     my_snake.set_direction(KEY["UP"])
     my_snake.move()
@@ -289,8 +281,6 @@ def main():
         my_snake.grow()
         my_snake.move()
         start_segments -= 1
-
-
 
     max_apples = 1
     eaten_apple = False
@@ -303,11 +293,9 @@ def main():
     while (endgame != 1):
         GAMECLOCK.tick(FPS)
 
-
         key_press = get_key()
         if key_press == "exit":
             endgame = 1
-
 
         check_limits(my_snake)
         if (my_snake.check_crashing() == True):
@@ -321,16 +309,13 @@ def main():
                     score += 10
                     eaten_apple = True
 
-
         if (key_press):
             my_snake.set_direction(key_press)
         my_snake.move()
 
-
         if (eaten_apple == True):
             eaten_apple = False
             respawn_apple(apples, 0, my_snake.get_head().x, my_snake.get_head().y)
-
 
         SCREEN.fill(BACKGROUND_COLOR)
         for my_apple in apples:
@@ -345,6 +330,5 @@ def main():
         pygame.display.flip()
         pygame.display.update()
 
+
 main()
-
-
